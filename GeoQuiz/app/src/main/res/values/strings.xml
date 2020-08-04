@@ -9,6 +9,7 @@
     <string name="true_button">true</string>
     <string name="false_button">false</string>
     <string name="next_button">next</string>
+    <string name="prev_button">prev</string>
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>
 </resources>
