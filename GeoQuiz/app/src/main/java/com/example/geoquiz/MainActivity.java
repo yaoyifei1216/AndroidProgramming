@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.NumberFormat;
+
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,20 +25,22 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mPrevButton;
     private TextView mQuestionTextView;
     private Question[] mQuestionBank = new Question[]{
-            new Question(R.string.question_australia, true),
-            new Question(R.string.question_oceans, true),
-            new Question(R.string.question_mideast, false),
-            new Question(R.string.question_africa, false),
-            new Question(R.string.question_americas, true),
-            new Question(R.string.question_asia, true)
+            new Question(R.string.question_australia, true,false),
+            new Question(R.string.question_mideast, true,false),
+            new Question(R.string.question_africa, false,false),
+            new Question(R.string.question_americas, true,false),
+            new Question(R.string.question_asia, true,false)
     };
     private int mCurrentIndex = 0;
+    private int mAnswerTrueCount = 0;
+    private int mAnswerFalseCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState != null) {
+            Log.d(TAG, "savedInstanceState");
             mCurrentIndex = savedInstanceState.getInt(INDEX_KEY,0);
         }
         Log.d(TAG, "onCreate: called");
@@ -46,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 updateQuestion();
+                updateButton();
             }
         });
-        updateQuestion();
         mTrueButton = findViewById(R.id.true_button);
         mFalseButton = findViewById(R.id.false_button);
         mNextButton = findViewById(R.id.next_button);
@@ -57,12 +61,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkQuestion(true);
+                updateButton();
             }
         });
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkQuestion(false);
+                updateButton();
             }
         });
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 updateQuestion();
+                updateButton();
             }
         });
         mPrevButton.setOnClickListener(new View.OnClickListener() {
@@ -81,13 +88,27 @@ public class MainActivity extends AppCompatActivity {
                     mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
                 }
                 updateQuestion();
+                updateButton();
             }
         });
+        updateQuestion();
+        updateButton();
     }
 
     private void updateQuestion() {
+        //Log.d(TAG, "Updating question text ", new Exception());
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+    }
+
+    private void updateButton() {
+        if (mQuestionBank[mCurrentIndex].isAnswered()) {
+            mTrueButton.setEnabled(false);
+            mFalseButton.setEnabled(false);
+        } else {
+            mTrueButton.setEnabled(true);
+            mFalseButton.setEnabled(true);
+        }
     }
 
     private void checkQuestion(boolean userCheck) {
@@ -95,9 +116,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (userCheck == answerIsTrue) {
             Toast.makeText(MainActivity.this, R.string.correct_toast, LENGTH_SHORT).show();
+            mAnswerTrueCount++;
         } else {
             Toast.makeText(MainActivity.this, R.string.incorrect_toast, LENGTH_SHORT).show();
+            mAnswerFalseCount++;
         }
+        if ((mAnswerTrueCount + mAnswerFalseCount) == mQuestionBank.length) {
+            NumberFormat numberFormat = NumberFormat.getInstance();// 设置精确到小数点后2位
+            numberFormat.setMaximumFractionDigits(2);
+            String result = numberFormat.format((float)  mAnswerTrueCount/ (float)mQuestionBank.length * 100);//所占百分比
+            Toast.makeText(MainActivity.this, "您的得分是:" + result, LENGTH_SHORT).show();
+        }
+        mQuestionBank[mCurrentIndex].setAnswered(true);
     }
 
     @Override
