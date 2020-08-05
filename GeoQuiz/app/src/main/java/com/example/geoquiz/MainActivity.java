@@ -1,5 +1,7 @@
 package com.example.geoquiz;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.NumberFormat;
@@ -16,11 +19,13 @@ import java.text.NumberFormat;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
-    private final static String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
     private static final String INDEX_KEY = "index";
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     private Button mFalseButton;
     private Button mTrueButton;
+    private Button mCheatButton;
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
     private TextView mQuestionTextView;
@@ -34,6 +39,21 @@ public class MainActivity extends AppCompatActivity {
     private int mCurrentIndex = 0;
     private int mAnswerTrueCount = 0;
     private int mAnswerFalseCount = 0;
+    private boolean mIsCheat;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_CANCELED) {
+            return;
+        }
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if (data == null) {
+                return;
+            }
+            mIsCheat = CheatActivity.wasAnswerShown(data);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         });
         mTrueButton = findViewById(R.id.true_button);
         mFalseButton = findViewById(R.id.false_button);
+        mCheatButton = findViewById(R.id.cheat_button);
         mNextButton = findViewById(R.id.next_button);
         mPrevButton = findViewById(R.id.prev_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +92,19 @@ public class MainActivity extends AppCompatActivity {
                 updateButton();
             }
         });
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = CheatActivity.newIntent(MainActivity.this,mQuestionBank[mCurrentIndex].isAnswerTrue());
+                startActivityForResult(intent,REQUEST_CODE_CHEAT);
+            }
+        });
+
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                mIsCheat = false;
                 updateQuestion();
                 updateButton();
             }
@@ -87,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
                 }
+                mIsCheat = false;
                 updateQuestion();
                 updateButton();
             }
@@ -105,22 +136,29 @@ public class MainActivity extends AppCompatActivity {
         if (mQuestionBank[mCurrentIndex].isAnswered()) {
             mTrueButton.setEnabled(false);
             mFalseButton.setEnabled(false);
+            mCheatButton.setEnabled(false);
         } else {
             mTrueButton.setEnabled(true);
             mFalseButton.setEnabled(true);
+            mCheatButton.setEnabled(true);
         }
     }
 
     private void checkQuestion(boolean userCheck) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
-
-        if (userCheck == answerIsTrue) {
-            Toast.makeText(MainActivity.this, R.string.correct_toast, LENGTH_SHORT).show();
-            mAnswerTrueCount++;
-        } else {
-            Toast.makeText(MainActivity.this, R.string.incorrect_toast, LENGTH_SHORT).show();
+        if (mIsCheat) {
+            Toast.makeText(MainActivity.this, R.string.judgment_toast, LENGTH_SHORT).show();
             mAnswerFalseCount++;
+        } else {
+            if (userCheck == answerIsTrue) {
+                Toast.makeText(MainActivity.this, R.string.correct_toast, LENGTH_SHORT).show();
+                mAnswerTrueCount++;
+            } else {
+                Toast.makeText(MainActivity.this, R.string.incorrect_toast, LENGTH_SHORT).show();
+                mAnswerFalseCount++;
+            }
         }
+
         if ((mAnswerTrueCount + mAnswerFalseCount) == mQuestionBank.length) {
             NumberFormat numberFormat = NumberFormat.getInstance();// 设置精确到小数点后2位
             numberFormat.setMaximumFractionDigits(2);
