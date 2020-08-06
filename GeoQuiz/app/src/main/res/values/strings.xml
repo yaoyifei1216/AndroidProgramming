@@ -15,4 +15,5 @@
     <string name="cheat_button">看一眼!</string>
     <string name="show_answer_button">显示答案!</string>
     <string name="warning_text">你确定要这样做吗?</string>
+    <string name="sdk_build_version">SDK_BUILD_VERSION</string>
 </resources>
