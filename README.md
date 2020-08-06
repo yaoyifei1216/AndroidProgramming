@@ -1,6 +1,11 @@
 # AndroidProgramming
 
-CriminalIntent
+## GeoQuiz
+
+它能给出一道道地理知识问题。用户点击TRUE或FALSE按钮来回答屏幕上的问题,GeoQuiz即时作出反馈
+
+
+## CriminalIntent
 
 该应用可详细记录各种办公室陋习,如随手将脏盘子丢在休息室水池里,或者自己打印完文件就走,全然不顾公共打印机里已缺纸等。
 
