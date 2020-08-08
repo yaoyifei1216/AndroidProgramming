@@ -2,6 +2,7 @@ package com.example.criminalintent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class CrimeListFragment extends Fragment {
+    private static final String TAG = "CrimeListFragment";
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
+    private int mCrimeIndex;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,12 +37,23 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
-        mAdapter = new CrimeAdapter(crimes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new CrimeAdapter(crimes);
+            mCrimeRecyclerView.setAdapter(mAdapter);
+        } else {
+            Log.d(TAG, "updateUI: mCrimeIndex" + mCrimeIndex);
+            mAdapter.notifyItemChanged(mCrimeIndex);
+        }
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder
@@ -62,8 +76,7 @@ public class CrimeListFragment extends Fragment {
                 mPoliceButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(), mCrime.getTitle()+"Police!", Toast.LENGTH_SHORT).show();
-                    }
+                        Toast.makeText(getActivity(), mCrime.getTitle()+"Police!", Toast.LENGTH_SHORT).show(); }
                 });
             } else {
                 mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
@@ -84,6 +97,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             Intent intent = CrimeActivity.newIntent(getActivity(),mCrime.getId());
+            mCrimeIndex = getAdapterPosition();
             startActivity(intent);
         }
     }
