@@ -1,6 +1,7 @@
 package com.example.criminalintent;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,8 +19,7 @@ import java.util.UUID;
 
 public class CrimePagerActivity extends AppCompatActivity {
 
-    private static final String EXTRA_CRIME_ID =
-            "com.bignerdranch.android.criminalintent.crime_id";
+    private static final String EXTRA_CRIME_ID = "com.example.criminalintent.crime_id";
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
     private Button mToFirstBtn,mToEndBtn;
@@ -67,6 +67,7 @@ public class CrimePagerActivity extends AppCompatActivity {
         });
         mCrimes = CrimeLab.get(this).getCrimes();
         UUID uuid = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+        //getParentActivityIntent().putExtra(CrimeListFragment.SAVED_SUBTITLE_VISIBLE,getIntent().getSerializableExtra(EXTRA_SUB_VISIABLE));
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @NonNull
@@ -93,5 +94,12 @@ public class CrimePagerActivity extends AppCompatActivity {
         Intent intent = new Intent(packageContext, CrimePagerActivity.class);
         intent.putExtra(EXTRA_CRIME_ID, crimeId);
         return intent;
+    }
+
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        super.getSupportParentActivityIntent().putExtra("mSubtitleVisible",(boolean) getIntent().getSerializableExtra("mSubtitleVisible"));
+        return super.getSupportParentActivityIntent();
     }
 }
