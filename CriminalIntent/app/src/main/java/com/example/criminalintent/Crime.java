@@ -17,8 +17,12 @@ public class Crime {
     public Crime() {
         mId = UUID.randomUUID();
         mDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE,MMMM dd,yyyy", Locale.ENGLISH);
-        mDateStr = dateFormat.format(mDate);
+        dateToStr(mDate);
+    }
+
+    private void dateToStr(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        mDateStr = dateFormat.format(date);
     }
 
     public boolean isSolved() {
@@ -58,6 +62,11 @@ public class Crime {
     }
 
     public String getDateStr() {
+        return mDateStr;
+    }
+
+    public String getDateStr(Date date) {
+        dateToStr(date);
         return mDateStr;
     }
 
