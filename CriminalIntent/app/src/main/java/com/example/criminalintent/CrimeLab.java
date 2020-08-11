@@ -16,7 +16,7 @@ import database.CrimeDbSchema.CrimeDbSchema;
 public class CrimeLab {
 
     private static CrimeLab sCrimeLab;
-    private List<Crime> mCrimes;
+    //private List<Crime> mCrimes;
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
@@ -30,7 +30,7 @@ public class CrimeLab {
     private CrimeLab(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new CrimeBaseHelper(mContext,"crimeBase.db",null,1).getWritableDatabase();
-        mCrimes = new ArrayList<>();
+        //mCrimes = new ArrayList<>();
         /*
         for (int i = 0; i < 10; i++) {
             Crime crime = new Crime();
@@ -47,6 +47,7 @@ public class CrimeLab {
         values.put(CrimeDbSchema.CrimeTable.Cols.TITLE, crime.getTitle());
         values.put(CrimeDbSchema.CrimeTable.Cols.DATE, crime.getDate().getTime());
         values.put(CrimeDbSchema.CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
+        values.put(CrimeDbSchema.CrimeTable.Cols.SUSPECT, crime.getSuspect());
         return values;
     }
 
