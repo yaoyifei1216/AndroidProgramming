@@ -96,10 +96,10 @@ public class CrimePagerActivity extends AppCompatActivity {
         return intent;
     }
 
-    @Nullable
+/*    @Nullable
     @Override
     public Intent getSupportParentActivityIntent() {
         super.getSupportParentActivityIntent().putExtra("mSubtitleVisible",(boolean) getIntent().getSerializableExtra("mSubtitleVisible"));
         return super.getSupportParentActivityIntent();
-    }
+    }*/
 }
