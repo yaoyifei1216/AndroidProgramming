@@ -13,6 +13,7 @@ public class Crime {
     private UUID mId;//UUID 是Android框架里的Java工具类,在构造方法里调用UUID.randomUUID()产生一个随机唯一ID值
     private boolean mRequiresPolice;//是否要报警
     private String mSuspect;//嫌疑人
+    private String mPhone;//嫌疑人电话号码
 
     public Crime() {
         this(UUID.randomUUID());
@@ -73,6 +74,14 @@ public class Crime {
         mSuspect = suspect;
     }
 
+    public String getPhone() {
+        return mPhone;
+    }
+
+    public void setPhone(String phone) {
+        mPhone = phone;
+    }
+
     public String getDateStr() {
         return mDateStr;
     }
@@ -84,5 +93,9 @@ public class Crime {
 
     public void setDateStr(String dateStr) {
         mDateStr = dateStr;
+    }
+
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
     }
 }

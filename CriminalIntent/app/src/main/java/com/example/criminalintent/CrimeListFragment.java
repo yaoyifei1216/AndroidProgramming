@@ -1,6 +1,6 @@
 package com.example.criminalintent;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,10 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
+
 
 public class CrimeListFragment extends Fragment {
     private static final String TAG = "CrimeListFragment";
@@ -31,6 +34,29 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
     private int mCrimeIndex;
     private boolean mSubtitleVisible;
+
+    private onCrimeSelectedCallbacks mCallbacks;
+
+
+    /**
+     * Required interface for hosting activities
+     */
+    public interface onCrimeSelectedCallbacks {
+        void onCrimeSelected(Crime crime);
+    }
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mCallbacks = (onCrimeSelectedCallbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,9 +90,8 @@ public class CrimeListFragment extends Fragment {
     private void addCrime() {
         Crime crime = new Crime();
         CrimeLab.get(getActivity()).addCrime(crime);
-        Intent intent = CrimePagerActivity
-                .newIntent(getActivity(), crime.getId());
-        startActivity(intent);
+        updateUI();
+        mCallbacks.onCrimeSelected(crime);
     }
 
     @Override
@@ -82,7 +107,7 @@ public class CrimeListFragment extends Fragment {
     }
 
 
-    private void updateUI() {
+    public void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
@@ -94,11 +119,21 @@ public class CrimeListFragment extends Fragment {
         if (mAdapter == null) {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
+            ItemTouchHelper.Callback callback= new RecycleItemTouchHelper(mAdapter);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+            itemTouchHelper.attachToRecyclerView(mCrimeRecyclerView);
         } else {
             Log.d(TAG, "updateUI: mCrimeIndex" + mCrimeIndex);
             //mAdapter.notifyItemChanged(mCrimeIndex);
             mAdapter.setCrimes(crimes);
-            mAdapter.notifyDataSetChanged();
+            if (!CrimeFragment.isDelete) {
+                Log.d(TAG, "notifyItemChanged");
+                mAdapter.notifyItemChanged(mCrimeIndex);
+            } else {
+                Log.d(TAG, "notifyDataSetChanged");
+                mAdapter.notifyDataSetChanged();
+                CrimeFragment.isDelete = false;
+            }
         }
         updateSubtitle();
     }
@@ -143,13 +178,12 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = CrimePagerActivity.newIntent(getActivity(),mCrime.getId());
             mCrimeIndex = getAdapterPosition();
-            startActivity(intent);
+            mCallbacks.onCrimeSelected(mCrime);
         }
     }
 
-    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
+    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> implements RecycleItemTouchHelper.ItemTouchHelperCallback {
 
         private List<Crime> mCrimes;
 
@@ -185,6 +219,23 @@ public class CrimeListFragment extends Fragment {
 
         public void setCrimes(List<Crime> crimes) {
             mCrimes = crimes;
+        }
+
+        @Override
+        public void onItemDelete(int position) {
+            Crime crime = mCrimes.get(position);
+            CrimeFragment.isDelete = true;
+            CrimeLab.get(getActivity()).deleteCrime(crime);
+            mAdapter.setCrimes(mCrimes);
+            //notifyItemRemoved(position);
+            updateUI();
+        }
+
+        @Override
+        public void onMove(int fromPosition, int toPosition) {
+            //Collections.swap(mCrimes,fromPosition,toPosition);//交换数据
+            notifyItemMoved(fromPosition,toPosition);
+            //updateUI();
         }
     }
 

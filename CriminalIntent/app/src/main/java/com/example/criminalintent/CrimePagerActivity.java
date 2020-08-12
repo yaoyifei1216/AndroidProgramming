@@ -17,7 +17,7 @@ import android.widget.Button;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.CrimeUpdatedCallbacks{
 
     private static final String EXTRA_CRIME_ID = "com.example.criminalintent.crime_id";
     private ViewPager mViewPager;
@@ -96,10 +96,8 @@ public class CrimePagerActivity extends AppCompatActivity {
         return intent;
     }
 
-/*    @Nullable
     @Override
-    public Intent getSupportParentActivityIntent() {
-        super.getSupportParentActivityIntent().putExtra("mSubtitleVisible",(boolean) getIntent().getSerializableExtra("mSubtitleVisible"));
-        return super.getSupportParentActivityIntent();
-    }*/
+    public void onCrimeUpdated(Crime crime) {
+
+    }
 }
