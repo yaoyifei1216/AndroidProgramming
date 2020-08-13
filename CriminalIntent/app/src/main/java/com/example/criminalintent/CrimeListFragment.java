@@ -111,7 +111,7 @@ public class CrimeListFragment extends Fragment {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
-        if (crimes.size() == 0){
+        if (crimes.size() == 0) {
             mEmptyCrimeTextView.setVisibility(View.VISIBLE);
         } else {
             mEmptyCrimeTextView.setVisibility(View.INVISIBLE);
@@ -119,7 +119,7 @@ public class CrimeListFragment extends Fragment {
         if (mAdapter == null) {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
-            ItemTouchHelper.Callback callback= new RecycleItemTouchHelper(mAdapter);
+            ItemTouchHelper.Callback callback = new RecycleItemTouchHelper(mAdapter);
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
             itemTouchHelper.attachToRecyclerView(mCrimeRecyclerView);
         } else {
@@ -152,13 +152,14 @@ public class CrimeListFragment extends Fragment {
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
             super(inflater.inflate(viewType == 0 ? R.layout.list_item_crime : R.layout.list_item_police_crime, parent, false));
             itemView.setOnClickListener(this);
-            if (viewType == 1){
+            if (viewType == 1) {
                 hasPoliceButton = true;
                 mPoliceButton = itemView.findViewById(R.id.crime_police);
                 mPoliceButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(), mCrime.getTitle()+"Police!", Toast.LENGTH_SHORT).show(); }
+                        Toast.makeText(getActivity(), mCrime.getTitle() + "Police!", Toast.LENGTH_SHORT).show();
+                    }
                 });
             } else {
                 mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
@@ -234,7 +235,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onMove(int fromPosition, int toPosition) {
             //Collections.swap(mCrimes,fromPosition,toPosition);//交换数据
-            notifyItemMoved(fromPosition,toPosition);
+            notifyItemMoved(fromPosition, toPosition);
             //updateUI();
         }
     }

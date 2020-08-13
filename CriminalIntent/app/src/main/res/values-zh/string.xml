@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">CriminalIntent</string>
+    <string name="crime_title_hint">在此输入陋习的标题</string>
+    <string name="crime_title_label">标题</string>
+    <string name="crime_date_label">日期</string>
+    <string name="crime_details_label">明细</string>
+    <string name="crime_solved_label">是否解决</string>
+    <string name="crime_police">报警</string>
+    <string name="date_picker_title">陋习发生日期</string>
+    <string name="hide_subtitle">隐藏子标题</string>
+    <string name="show_subtitle">显示子标题</string>
+    <string name="new_crime">创建陋习</string>
+    <string name="delete_crime">删除陋习</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d crime</item>
+        <item quantity="other">%1$d crimes</item>
+    </plurals>
+    <string name="subtitle_format">%1$d crimes</string>
+    <string name="empty_crime">没有陋习!点击添加一个吧!</string>
+    <string name="crime_suspect_text">选择嫌疑人</string>
+    <string name="crime_report_text">发送陋习报告</string>
+    <string name="crime_report">%1$s!\n发生于:%2$s\n%3$s\n%4$s</string>
+    <string name="crime_report_solved">但是目前问题已解决</string>
+    <string name="crime_report_unsolved">而且目前问题尚未解决</string>
+    <string name="crime_report_no_suspect">没找到嫌疑人</string>
+    <string name="crime_report_suspect">嫌疑人是:%s</string>
+    <string name="crime_report_subject">陋习处理报告</string>
+    <string name="send_report">投诉方式</string>
+    <string name="crime_call_text">电话投诉嫌疑人</string>
+</resources>

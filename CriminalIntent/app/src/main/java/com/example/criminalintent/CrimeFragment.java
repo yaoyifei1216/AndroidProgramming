@@ -252,9 +252,9 @@ public class CrimeFragment extends Fragment {
         }
         if (requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            mCrime.setDate(date);
+            mCrime.setDateStr(mCrime.getDateStr(date));
             updateCrime();
-            updateDate(mCrime.getDateStr(date));
+            updateDate(mCrime.getDateStr());
         } else if (requestCode == REQUEST_CONTACT && data != null) {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -335,8 +335,7 @@ public class CrimeFragment extends Fragment {
         } else {
             solvedString = getString(R.string.crime_report_unsolved);
         }
-        String dateFormat = "EEE, MMM dd";
-        String dateString = DateFormat.format(dateFormat, mCrime.getDate()).toString();
+        String dateString = mCrime.getDateStr();
         String suspect = mCrime.getSuspect();
         if (suspect == null) {
             suspect = getString(R.string.crime_report_no_suspect);
@@ -344,7 +343,7 @@ public class CrimeFragment extends Fragment {
             suspect = getString(R.string.crime_report_suspect, suspect);
         }
         String report = getString(R.string.crime_report,
-                mCrime.getTitle(), dateString, solvedString, suspect);
+                mCrime.getTitle(), dateString, suspect, solvedString);
         return report;
     }
 

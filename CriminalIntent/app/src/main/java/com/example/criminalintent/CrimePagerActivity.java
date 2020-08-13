@@ -1,28 +1,28 @@
 package com.example.criminalintent;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.CrimeUpdatedCallbacks{
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.CrimeUpdatedCallbacks {
 
     private static final String EXTRA_CRIME_ID = "com.example.criminalintent.crime_id";
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
-    private Button mToFirstBtn,mToEndBtn;
+    private Button mToFirstBtn, mToEndBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +39,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
         mToEndBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager.setCurrentItem(mCrimes.size()-1);
+                mViewPager.setCurrentItem(mCrimes.size() - 1);
             }
         });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -50,7 +50,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
                 if (position == 0) {
                     mToFirstBtn.setVisibility(View.INVISIBLE);
                 }
-                if (position == mCrimes.size()-1){
+                if (position == mCrimes.size() - 1) {
                     mToEndBtn.setVisibility(View.INVISIBLE);
                 }
             }

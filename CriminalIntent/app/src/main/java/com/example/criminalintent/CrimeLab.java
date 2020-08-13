@@ -21,7 +21,7 @@ public class CrimeLab {
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
-    public static CrimeLab get(Context context){
+    public static CrimeLab get(Context context) {
         if (sCrimeLab == null) {
             sCrimeLab = new CrimeLab(context);
         }
@@ -30,7 +30,7 @@ public class CrimeLab {
 
     private CrimeLab(Context context) {
         mContext = context.getApplicationContext();
-        mDatabase = new CrimeBaseHelper(mContext,"crimeBase.db",null,1).getWritableDatabase();
+        mDatabase = new CrimeBaseHelper(mContext, "crimeBase.db", null, 1).getWritableDatabase();
         //mCrimes = new ArrayList<>();
         /*
         for (int i = 0; i < 10; i++) {
@@ -46,7 +46,7 @@ public class CrimeLab {
         ContentValues values = new ContentValues();
         values.put(CrimeDbSchema.CrimeTable.Cols.UUID, crime.getId().toString());
         values.put(CrimeDbSchema.CrimeTable.Cols.TITLE, crime.getTitle());
-        values.put(CrimeDbSchema.CrimeTable.Cols.DATE, crime.getDate().getTime());
+        values.put(CrimeDbSchema.CrimeTable.Cols.DATE, crime.getDateStr());
         values.put(CrimeDbSchema.CrimeTable.Cols.SOLVED, crime.isSolved() ? 1 : 0);
         values.put(CrimeDbSchema.CrimeTable.Cols.SUSPECT, crime.getSuspect());
         values.put(CrimeDbSchema.CrimeTable.Cols.PHONE, crime.getPhone());
@@ -58,7 +58,7 @@ public class CrimeLab {
         ContentValues values = getContentValues(crime);
         mDatabase.update(CrimeDbSchema.CrimeTable.NAME, values,
                 CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",
-                new String[] { uuidString });
+                new String[]{uuidString});
     }
 
     private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
@@ -83,7 +83,7 @@ public class CrimeLab {
     public void deleteCrime(Crime c) {
         //mCrimes.remove(c);
         String uuidString = c.getId().toString();
-        mDatabase.delete(CrimeDbSchema.CrimeTable.NAME, CrimeDbSchema.CrimeTable.Cols.UUID + " = ?", new String[] { uuidString });
+        mDatabase.delete(CrimeDbSchema.CrimeTable.NAME, CrimeDbSchema.CrimeTable.Cols.UUID + " = ?", new String[]{uuidString});
     }
 
     public List<Crime> getCrimes() {
@@ -101,9 +101,9 @@ public class CrimeLab {
         return crimes;
     }
 
-    public Crime getCrime(UUID id){
+    public Crime getCrime(UUID id) {
         CrimeCursorWrapper cursor = queryCrimes(
-                CrimeDbSchema.CrimeTable.Cols.UUID + " = ?", new String[] { id.toString()});
+                CrimeDbSchema.CrimeTable.Cols.UUID + " = ?", new String[]{id.toString()});
         try {
             if (cursor.getCount() == 0) {
                 return null;
