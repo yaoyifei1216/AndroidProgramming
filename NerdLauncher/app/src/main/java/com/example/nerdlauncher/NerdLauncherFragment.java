@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,24 +59,30 @@ public class NerdLauncherFragment extends Fragment {
     private class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ResolveInfo mResolveInfo;
         private TextView mNameTextView;
+        private ImageView mIconImage;
 
         public ActivityHolder(View itemView) {
             super(itemView);
-            mNameTextView = (TextView) itemView;
+            mNameTextView = itemView.findViewById(R.id.activity_text_view);
+            mIconImage = itemView.findViewById(R.id.activity_icon_image);
         }
 
         public void bindActivity(ResolveInfo resolveInfo) {
             mResolveInfo = resolveInfo;
             PackageManager pm = getActivity().getPackageManager();
             String appName = mResolveInfo.loadLabel(pm).toString();
+            Drawable loadIcon = mResolveInfo.loadIcon(pm);
             mNameTextView.setText(appName);
+            mIconImage.setImageDrawable(loadIcon);
             mNameTextView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             ActivityInfo activityInfo = mResolveInfo.activityInfo;
-            Intent intent = new Intent(Intent.ACTION_MAIN).setClassName(activityInfo.applicationInfo.packageName, activityInfo.name);
+            Intent intent = new Intent(Intent.ACTION_MAIN)
+                    .setClassName(activityInfo.applicationInfo.packageName, activityInfo.name)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }
