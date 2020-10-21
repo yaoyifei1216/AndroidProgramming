@@ -1,4 +1,4 @@
-package com.example.kotlinstarted
+package com.example.kotlinstarted.kt
 
 class Student(val sno: String, val grade: Int, name: String, age: Int) : Person(name, age), Study {
 //    var sno = ""

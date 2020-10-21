@@ -1,4 +1,4 @@
-package com.example.kotlinstarted
+package com.example.kotlinstarted.kt
 
 open class Person(val name: String, val age: Int ) {
 //    var name = ""
