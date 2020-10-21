@@ -6,13 +6,25 @@ fun main() {
     val a = 10
     val b = 40
     val max = maxValue2(a, b)
-    //forin()
-    //println(max)
-    var p = Person()
-    p.age = 23
-    p.name = "yaoyifei"
-    p.toString()
-    p.eat()
+//    forin()
+//    println(max)
+//    var p = Person("yaoyifei", 23)
+//    p.toString()
+//    p.eat()
+//    var student1 = Student()
+//    var student2 = Student("yaoyifei", 23)
+//    var student3 = Student("201521091065", 4, "yaoyifei", 23)
+//    doStudy(student3)
+    val cellphone1 = Cellphone("Samsung", 1299.99)
+    val cellphone2 = Cellphone("Samsung", 1299.99)
+    println(cellphone1)
+    println(cellphone2)
+    println("cellphone1 equals cellphone2 " + (cellphone1 == cellphone2))
+}
+
+fun doStudy(student: Study) {
+    student.readBooks()
+    student.doHomework()
 }
 
 private fun maxValue(a: Int, b: Int): Int {
@@ -67,4 +79,10 @@ fun forin() {
     for (i in 10 downTo 0) {
         println(i)
     }
+}
+
+fun Lambda() {
+    val list = listOf("Apple", "Banana", "Orange", "Pear", "Grape", "Watermelon")
+    val maxLengthFruit = list.maxBy { it.length }
+    println("max length fruit is " + maxLengthFruit)
 }
