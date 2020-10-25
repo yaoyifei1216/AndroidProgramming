@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.example.kotlinstarted.activitylifecycletest.DialogActivity
 import com.example.kotlinstarted.activitylifecycletest.NormalActivity
+import com.example.kotlinstarted.broadcasttest.BroadCastActivity
 import com.example.kotlinstarted.fragmenttest.FragmentActivity
 import com.example.kotlinstarted.recyclerviewtest.RecyclerViewTestActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -48,6 +49,10 @@ class MainActivity : BaseActivity() {
         }
         fragment.setOnClickListener {
             val intent = Intent(this, FragmentActivity::class.java)
+            startActivity(intent)
+        }
+        broadcast.setOnClickListener {
+            val intent = Intent(this, BroadCastActivity::class.java)
             startActivity(intent)
         }
     }
