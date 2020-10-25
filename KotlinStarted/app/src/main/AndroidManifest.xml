@@ -10,17 +10,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".fragmenttest.NewsContentActivity"></activity>
+        <activity android:name=".fragmenttest.FragmentActivity" />
+        <activity android:name=".recyclerviewtest.RecyclerViewTestActivity" />
         <activity
-            android:name=".SecondActivity">
+            android:name=".activitylifecycletest.DialogActivity"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity android:name=".activitylifecycletest.NormalActivity" />
+        <activity
+            android:name=".ThirdActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.kotlinstarted_1" />
+        <activity
+            android:name=".SecondActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.example.kotlinstarted_1">
             <intent-filter tools:ignore="AppLinkUrlError">
-                <action android:name="android.intent.action.VIEW"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-                <data android:scheme="https"></data>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="https" />
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
