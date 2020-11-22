@@ -12,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".storagepersistencertest.FilePersistenceActivity"></activity>
+
         <receiver
             android:name=".broadcasttest.AnotherBroadcastReceiver"
             android:enabled="true"

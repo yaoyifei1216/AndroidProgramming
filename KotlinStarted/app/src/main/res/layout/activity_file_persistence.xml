@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".storagepersistencertest.FilePersistenceActivity">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type something here"
+        app:layout_constraintTop_toTopOf="parent"></EditText>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Save Data"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        tools:layout_editor_absoluteX="16dp"></Button>
+
+    <Button
+        android:id="@+id/restoreButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Restore Data"
+        app:layout_constraintTop_toBottomOf="@+id/saveButton"
+        tools:layout_editor_absoluteX="16dp"></Button>
+
+    <Button
+        android:id="@+id/createDatabase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Create Database"
+        app:layout_constraintTop_toBottomOf="@+id/restoreButton"
+        tools:layout_editor_absoluteX="16dp"></Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

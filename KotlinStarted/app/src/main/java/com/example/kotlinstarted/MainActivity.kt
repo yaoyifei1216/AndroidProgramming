@@ -11,6 +11,7 @@ import com.example.kotlinstarted.activitylifecycletest.NormalActivity
 import com.example.kotlinstarted.broadcasttest.BroadCastActivity
 import com.example.kotlinstarted.fragmenttest.FragmentActivity
 import com.example.kotlinstarted.recyclerviewtest.RecyclerViewTestActivity
+import com.example.kotlinstarted.storagepersistencertest.FilePersistenceActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -53,6 +54,10 @@ class MainActivity : BaseActivity() {
         }
         broadcast.setOnClickListener {
             val intent = Intent(this, BroadCastActivity::class.java)
+            startActivity(intent)
+        }
+        file.setOnClickListener {
+            val intent = Intent(this, FilePersistenceActivity::class.java)
             startActivity(intent)
         }
     }
