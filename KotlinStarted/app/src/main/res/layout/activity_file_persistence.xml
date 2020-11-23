@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Type something here"
-        app:layout_constraintTop_toTopOf="parent"></EditText>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/saveButton"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:hint="Save Data"
         app:layout_constraintTop_toBottomOf="@+id/editText"
-        tools:layout_editor_absoluteX="16dp"></Button>
+        tools:layout_editor_absoluteX="16dp" />
 
     <Button
         android:id="@+id/restoreButton"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:hint="Restore Data"
         app:layout_constraintTop_toBottomOf="@+id/saveButton"
-        tools:layout_editor_absoluteX="16dp"></Button>
+        tools:layout_editor_absoluteX="16dp" />
 
     <Button
         android:id="@+id/createDatabase"
@@ -35,6 +35,40 @@
         android:layout_height="wrap_content"
         android:hint="Create Database"
         app:layout_constraintTop_toBottomOf="@+id/restoreButton"
-        tools:layout_editor_absoluteX="16dp"></Button>
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/addData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="Add Data"
+        app:layout_constraintTop_toBottomOf="@+id/createDatabase"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/updateData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Update Data"
+        app:layout_constraintTop_toBottomOf="@+id/addData"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/deleteData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Delete Data"
+        app:layout_constraintTop_toBottomOf="@+id/updateData"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/queryData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Query Data"
+        app:layout_constraintTop_toBottomOf="@+id/deleteData"
+        tools:layout_editor_absoluteX="16dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
