@@ -31,7 +31,7 @@ class FilePersistenceActivity : AppCompatActivity() {
             //Log.d("yaoyifei", "$name")
             Toast.makeText(this, "$name", Toast.LENGTH_SHORT).show()
         }
-        val dbHelper = MyDatabaseHelper(this, "BookStore.db", 1)
+        val dbHelper = MyDatabaseHelper(this, "BookStore.db", 1)//创建数据库
         createDatabase.setOnClickListener {
             dbHelper.writableDatabase
         }
