@@ -1,7 +1,8 @@
 *.iml
 .gradle
-/local.properties
-/.idea/caches
+/locaql.properties
+.idea
+/.idea/codeStyles
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
@@ -13,3 +14,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/release/
+logo
